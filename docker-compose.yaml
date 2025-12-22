@@ -11,3 +11,15 @@ services:
       - ./.data/couchdb/data:/opt/couchdb/data
       - ./.data/couchdb/config:/opt/couchdb/etc/local.d
     restart: unless-stopped
+  couchdb-replica:
+    image: couchdb:latest
+    container_name: couchdb-replica
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=password
+    ports:
+      - "5985:5984"
+    volumes:
+      - ./.data/couchdb-replica/data:/opt/couchdb/data
+      - ./.data/couchdb-replica/config:/opt/couchdb/etc/local.d
+    restart: unless-stopped

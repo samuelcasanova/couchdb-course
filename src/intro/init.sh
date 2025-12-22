@@ -8,6 +8,10 @@ curl -X PUT http://admin:password@localhost:5984/_users
 curl -X PUT http://admin:password@localhost:5984/_replicator
 curl -X PUT http://admin:password@localhost:5984/_global_changes
 
+echo -e "\nThe same config for the replica..."
+curl -X PUT http://admin:password@localhost:5985/_users
+curl -X PUT http://admin:password@localhost:5985/_replicator
+curl -X PUT http://admin:password@localhost:5985/_global_changes
 
 echo -e "\nCreating a new database..."
 curl -X PUT http://admin:password@localhost:5984/demo
