@@ -30,7 +30,18 @@ echo -e "\nCreating a new user..."
 curl -X PUT http://admin:password@localhost:5984/_users/org.couchdb.user:samuel \
      -H "Accept: application/json" \
      -H "Content-Type: application/json" \
-     -d '{"name": "samuel", "password": "password", "roles": [], "type": "user"}'
+     -d '{"name": "samuel", "password": "password", "roles": ["demo_admin"], "type": "user"}'
 
 echo -e "\nListing all users..."
 curl http://admin:password@localhost:5984/_users/_all_docs
+
+echo -e "\nLogging in as samuel..."
+curl -X POST http://localhost:5984/_session -d 'name=samuel&password=password'
+
+echo -e "\nSetting samuel as a member of the demo database..."
+curl -X PUT http://admin:password@localhost:5984/demo/_security \
+     -H "Content-Type: application/json" \
+     -d '{"admins": { "names": [], "roles": ["demo_admin"] }, "members": { "names": ["samuel"], "roles": [] } }'
+
+echo -e "\nTrying to access the demo database as samuel as a member and also as admin with the demo_admin role..."
+curl -u samuel:password http://localhost:5984/demo
