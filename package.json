@@ -10,7 +10,7 @@
     "documents": "node src/intro/documents.js",
     "fauxton": "xdg-open http://localhost:5984/_utils",
     "replicate": "node src/replication/replicate.js",
-    "all": "npm run clean && npm run init && npm run documents"
+    "all": "npm run clean && npm run init && npm run documents && npm run replicate"
   },
   "repository": {
     "type": "git",
