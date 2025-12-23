@@ -1,6 +1,7 @@
 {
   "name": "couchdb-course",
   "version": "1.0.0",
+  "type": "module",
   "description": "A hands-on learning repository for exploring Apache CouchDB, a NoSQL document database with a focus on ease of use and having a scalable architecture.",
   "main": "index.js",
   "scripts": {
@@ -8,6 +9,7 @@
     "init": "node src/intro/init.js",
     "documents": "node src/intro/documents.js",
     "fauxton": "xdg-open http://localhost:5984/_utils",
+    "replicate": "node src/replication/replicate.js",
     "all": "npm run clean && npm run init && npm run documents"
   },
   "repository": {

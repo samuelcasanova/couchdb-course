@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const BASE_URL = 'http://localhost:5984';
 export const REPLICA_URL = 'http://localhost:5985';
+export const REPLICA_FROM_BASE_URL = 'http://couchdb-replica:5984';
 
 export const ADMIN_AUTH = { username: 'admin', password: 'password' };
 export const SAMUEL_AUTH = { username: 'samuel', password: 'password' };

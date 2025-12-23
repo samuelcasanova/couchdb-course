@@ -70,6 +70,9 @@ Resets the entire environment by stopping containers, removing data, and restart
 #### `npm run all`
 Runs a complete workflow: clean the environment, run the init tutorial, and then run the documents tutorial.
 
+#### `npm run replicate`
+Replicates the demo database from the primary server to the replica server
+
 **Run the complete tutorial:**
 ```bash
 npm run all
