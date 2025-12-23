@@ -1,0 +1,27 @@
+{
+  "name": "couchdb-course",
+  "version": "1.0.0",
+  "description": "A hands-on learning repository for exploring Apache CouchDB, a NoSQL document database with a focus on ease of use and having a scalable architecture.",
+  "main": "index.js",
+  "scripts": {
+    "clean": "docker compose down && sudo rm -rf ./.data && docker compose up -d && sleep 3",
+    "init": "node src/intro/init.js",
+    "documents": "node src/intro/documents.js",
+    "fauxton": "xdg-open http://localhost:5984/_utils",
+    "all": "npm run clean && npm run init && npm run documents"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samuelcasanova/couchdb-course.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samuelcasanova/couchdb-course/issues"
+  },
+  "homepage": "https://github.com/samuelcasanova/couchdb-course#readme",
+  "dependencies": {
+    "axios": "^1.13.2"
+  }
+}

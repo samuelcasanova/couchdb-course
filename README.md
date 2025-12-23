@@ -11,7 +11,7 @@ This repository contains practical examples and exercises for learning CouchDB f
 ### Prerequisites
 
 - Docker and Docker Compose installed on your system
-- `curl` command-line tool (for running example scripts)
+- Node.js (v14 or higher) and npm installed
 - Basic understanding of REST APIs and JSON
 
 ### Quick Start
@@ -28,31 +28,51 @@ This repository contains practical examples and exercises for learning CouchDB f
      - Username: `admin`
      - Password: `password`
 
-3. **Clean and reset the environment:**
+3. **Install dependencies:**
    ```bash
-   ./clean.sh
+   npm install
    ```
-   This script will stop the container, remove all data, and restart with a fresh instance.
+
+4. **Clean and reset the environment:**
+   ```bash
+   npm run clean
+   ```
+   This command will stop the container, remove all data, and restart with a fresh instance.
 
 ## 📚 Course Content
 
-### Introduction (`src/intro/init.sh`)
+### Available Scripts
 
-The introduction script covers fundamental CouchDB operations:
+The repository includes several npm scripts to help you learn CouchDB:
 
+#### `npm run init`
+Runs the introduction tutorial (`src/intro/init.js`) which covers fundamental CouchDB operations:
 - **Server Information**: Verify CouchDB is running
 - **System Databases**: Create required system databases (`_users`, `_replicator`, `_global_changes`)
 - **Database Operations**: Create and list databases
-- **Document Management**: Create and retrieve JSON documents
 - **User Administration**: 
   - Create admin users
   - Create regular users with roles
   - List all users
 
-**Run the introduction tutorial:**
+#### `npm run documents`
+Runs the document management tutorial (`src/intro/documents.js`) which demonstrates:
+- **Document Creation**: Create JSON documents in CouchDB
+- **Document Retrieval**: Fetch and display documents
+- **Document Updates**: Modify existing documents
+
+#### `npm run fauxton`
+Opens the CouchDB web interface (Fauxton) in your default browser.
+
+#### `npm run clean`
+Resets the entire environment by stopping containers, removing data, and restarting fresh.
+
+#### `npm run all`
+Runs a complete workflow: clean the environment, run the init tutorial, and then run the documents tutorial.
+
+**Run the complete tutorial:**
 ```bash
-cd src/intro
-./init.sh
+npm run all
 ```
 
 ## 📖 Learning Resources
