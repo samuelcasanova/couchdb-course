@@ -18,6 +18,7 @@ async function main() {
     },
     data: {
       _id: "biking",
+      type: "post",
       title: "Biking",
       body: "My biggest hobby is mountainbiking. The other day...",
       date: "2009/01/30 18:04:11",
@@ -33,6 +34,7 @@ async function main() {
     },
     data: {
       _id: "bought-a-cat",
+      type: "post",
       title: "Bought a Cat",
       body: "I went to the pet store earlier and brought home a little kitty...",
       date: "2009/02/17 21:13:39",
@@ -48,6 +50,7 @@ async function main() {
     },
     data: {
       _id: "hello-world",
+      type: "post",
       title: "Hello World",
       body: "Well hello and welcome to my new blog...",
       date: "2009/01/15 15:52:20",
@@ -163,9 +166,7 @@ async function main() {
     },
   });
 
-  console.log(
-    "Updating the design document to include a new view for the comments..."
-  );
+  console.log("Updating the design document to include 2 new views...");
   console.log(designDocument);
   await makeRequest({
     method: "PUT",
@@ -181,6 +182,9 @@ async function main() {
         comments: {
           map: "function(doc) { if(doc.type == 'comment' && doc.post_id) { emit([doc.post_id, doc.created], doc.body); }}",
         },
+        comments_by_post_ordered_by_date: {
+          map: "function(doc) { if(doc.type == 'comment' && doc.post_id) { emit([doc.post_id, doc.created], doc.body); } if(doc.type == 'post' && doc._id) { emit([doc._id, doc.date], doc.body); }}",
+        },
       },
     },
   });
@@ -189,6 +193,13 @@ async function main() {
   await makeRequest({
     method: "GET",
     url: `${BASE_URL}/demo/_design/blog/_view/comments?startkey=["hello-world", "2009/01/01 00:00:00"]`,
+    auth: ADMIN_AUTH,
+  });
+
+  console.log("\nQuerying the new comments_by_post_ordered_by_date view...");
+  await makeRequest({
+    method: "GET",
+    url: `${BASE_URL}/demo/_design/blog/_view/comments_by_post_ordered_by_date?startkey=["hello-world", "2009/01/01 00:00:00"]`,
     auth: ADMIN_AUTH,
   });
 
