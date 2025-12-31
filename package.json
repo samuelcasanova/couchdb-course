@@ -9,6 +9,7 @@
     "init": "node src/intro/init.js",
     "documents": "node src/intro/documents.js",
     "views": "node src/views/documents.js",
+    "mango": "node src/views/mango.js",
     "fauxton": "xdg-open http://localhost:5984/_utils",
     "replicate": "node src/replication/replicate.js",
     "all": "npm run clean && npm run init && npm run documents && npm run views && npm run replicate"
