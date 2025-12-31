@@ -10,6 +10,7 @@
     "documents": "node src/intro/documents.js",
     "views": "node src/views/documents.js",
     "mango": "node src/views/mango.js",
+    "nano": "node src/nano/nano.js",
     "fauxton": "xdg-open http://localhost:5984/_utils",
     "replicate": "node src/replication/replicate.js",
     "all": "npm run clean && npm run init && npm run documents && npm run views && npm run replicate"
@@ -26,6 +27,7 @@
   },
   "homepage": "https://github.com/samuelcasanova/couchdb-course#readme",
   "dependencies": {
-    "axios": "^1.13.2"
+    "axios": "^1.13.2",
+    "nano": "^11.0.3"
   }
 }
