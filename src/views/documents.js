@@ -55,7 +55,7 @@ async function main() {
   });
 
   console.log("\nCreating a view...");
-  await makeRequest({
+  const designDocument = await makeRequest({
     method: "PUT",
     url: `${BASE_URL}/demo/_design/blog`,
     auth: ADMIN_AUTH,
@@ -86,6 +86,109 @@ async function main() {
   await makeRequest({
     method: "GET",
     url: `${BASE_URL}/demo/_design/blog/_view/my_filter?key="2009/01/30 18:04:11"`,
+    auth: ADMIN_AUTH,
+  });
+
+  console.log(
+    "\nQuerying the view with a date range in descending order, beware of the order of the startkey and endkey..."
+  );
+  await makeRequest({
+    method: "GET",
+    url: `${BASE_URL}/demo/_design/blog/_view/my_filter?startkey="2009/02/01 00:00:00"&endkey="2009/01/01 00:00:00"&descending=true`,
+    auth: ADMIN_AUTH,
+  });
+
+  console.log("\nCreate some sample post comments...");
+  await makeRequest({
+    method: "POST",
+    url: `${BASE_URL}/demo`,
+    auth: ADMIN_AUTH,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: {
+      _id: "bought-a-cat-comment-1",
+      type: "comment",
+      post_id: "bought-a-cat",
+      body: "I went to the pet store earlier and brought home a little kitty...",
+      created: "2009/02/17 21:13:39",
+    },
+  });
+
+  await makeRequest({
+    method: "POST",
+    url: `${BASE_URL}/demo`,
+    auth: ADMIN_AUTH,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: {
+      _id: "bought-a-cat-comment-2",
+      type: "comment",
+      post_id: "bought-a-cat",
+      body: "I went to the pet store earlier and brought home a little kitty...",
+      created: "2009/03/07 20:18:39",
+    },
+  });
+
+  await makeRequest({
+    method: "POST",
+    url: `${BASE_URL}/demo`,
+    auth: ADMIN_AUTH,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: {
+      _id: "hello-world-comment-1",
+      type: "comment",
+      post_id: "hello-world",
+      body: "Hello world, this is a comment!",
+      created: "2009/03/28 20:38:39",
+    },
+  });
+
+  await makeRequest({
+    method: "POST",
+    url: `${BASE_URL}/demo`,
+    auth: ADMIN_AUTH,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: {
+      _id: "hello-world-comment-2",
+      type: "comment",
+      post_id: "hello-world",
+      body: "Hello world, this is a comment!",
+      created: "2009/03/29 00:38:39",
+    },
+  });
+
+  console.log(
+    "Updating the design document to include a new view for the comments..."
+  );
+  console.log(designDocument);
+  await makeRequest({
+    method: "PUT",
+    url: `${BASE_URL}/demo/_design/blog`,
+    auth: ADMIN_AUTH,
+    data: {
+      _id: designDocument.id,
+      _rev: designDocument.rev,
+      views: {
+        my_filter: {
+          map: "function(doc) { if(doc.date && doc.title) { emit(doc.date, doc.title); }}",
+        },
+        comments: {
+          map: "function(doc) { if(doc.type == 'comment' && doc.post_id) { emit([doc.post_id, doc.created], doc.body); }}",
+        },
+      },
+    },
+  });
+
+  console.log("\nQuerying the new comments view...");
+  await makeRequest({
+    method: "GET",
+    url: `${BASE_URL}/demo/_design/blog/_view/comments?startkey=["hello-world", "2009/01/01 00:00:00"]`,
     auth: ADMIN_AUTH,
   });
 
